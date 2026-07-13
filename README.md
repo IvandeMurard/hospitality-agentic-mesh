@@ -1,6 +1,6 @@
 <h1 align="center">Hospitality Agentic Mesh</h1>
 <p align="center">
-  <em>Operational memory for hotel operations: AI agents that anticipate, check themselves every morning, say so when they drift, and learn from every service. Human-in-the-loop by design.</em>
+  <em>Operational memory for hotel operations: AI agents that anticipate, evaluate autonomously and continually, and learn from every service. Evaluation & Human-in-the-loop by design.</em>
 </p>
 
 <p align="center">
