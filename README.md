@@ -13,14 +13,12 @@
 
 ## The Vision: AI as a Living Operational Memory
 
-Most hotel software suffers from operational amnesia. Data is siloed, and insights are forgotten the moment a guest checks out or a service ends. 
-
-The Hospitality Agentic Mesh changes this by turning AI into a **living operational memory**. Rather than just generating a static F&B forecast or a daily report, the Mesh acts as an active nervous system for the property:
+This Hospitality Agentic Architecture turns AI into a **living operational memory**. Rather than just generating a static F&B forecast or a daily report, the Mesh acts as a living cognitive system for the property:
 - **Understands, like a human:** Contextual reasoning grounded in each property's history, powered by a unified signal ontology that translates chaotic real-world events into structured, cross-domain context.
 - **Measures, like a machine:** Every recommendation is stored next to its real outcome, so the system explicitly knows what it said versus what actually happened.
 - **Learns, like a network:** Per-property memory today, federated priors next, leveraging shared intelligence to give independent hotels the power of a hive.
 
-The individual forecasts and risk scores are just sensory organs. The true product and value lies in the **per-property memory** it builds—a compounding asset that permanently optimizes operations, cuts waste, and elevates the guest experience, all without requiring the manager to micromanage the data.
+The individual forecasts and risk scores are just sensory organs. The true product and value lies in the **per-property memory** as it builds a compounding asset that continually optimizes operations, cuts waste, and elevates the guest experience.
 
 ## What this is
 
