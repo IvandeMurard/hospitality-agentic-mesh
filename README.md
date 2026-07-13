@@ -1,6 +1,6 @@
 <h1 align="center">Hospitality Agentic Mesh</h1>
 <p align="center">
-  <em>Operational memory for hotel operations: AI agents that anticipate, evaluate autonomously and continually, and learn from every service. Evaluation & Human-in-the-loop by design.</em>
+  <em>Operational memory for hotel operations: A network of specialized AI agents that anticipate guest needs, evaluate autonomously, and learn from every service to optimize operations and cut costs.</em>
 </p>
 
 <p align="center">
@@ -11,80 +11,102 @@
 
 ---
 
-## The thesis
+## The Vision: AI as a Living Operational Memory
 
-**Memory**: capturing outcomes next to the forecasts that preceded them, self-reporting the miss to the manager, guarding the training data, recalibrating weekly. The forecast is an organ; the closed loop and the per-property memory it builds are the product. Full argument: [COGNITION.md](COGNITION.md) · working proof: [demo/closed-loop/](demo/closed-loop/).
+Most hotel software suffers from operational amnesia. Data is siloed, and insights are forgotten the moment a guest checks out or a service ends. 
+
+The Hospitality Agentic Mesh changes this by turning AI into a **living operational memory**. Rather than just generating a static F&B forecast or a daily report, the Mesh acts as an active nervous system for the property:
+- **Understands, like a human:** Contextual reasoning grounded in each property's history, powered by a unified signal ontology that translates chaotic real-world events into structured, cross-domain context.
+- **Measures, like a machine:** Every recommendation is stored next to its real outcome, so the system explicitly knows what it said versus what actually happened.
+- **Learns, like a network:** Per-property memory today, federated priors next, leveraging shared intelligence to give independent hotels the power of a hive.
+
+The individual forecasts and risk scores are just sensory organs. The true product and value lies in the **per-property memory** it builds—a compounding asset that permanently optimizes operations, cuts waste, and elevates the guest experience, all without requiring the manager to micromanage the data.
 
 ## What this is
 
-This is the public meta-repo of a multi-repo system I've been building solo since late 2025: a network of specialized AI agents ("nodes") for hotel operations. Each node owns a strict bounded context, exposes its capabilities as [MCP](https://modelcontextprotocol.io) tools, and recommends rather than acts. A human manager validates every decision.
+This is the public meta-repo of a multi-repo system I've been building solo since late 2025. It serves as the architectural blueprint for an event-driven network of AI agents designed for hotel operations.
 
-The main execution node (Aetherix) lives in a private repo. It targets a real-property pilot and carries security posture, eval baselines and PMS integration details that don't belong in public. This repo documents the architecture and the engineering practices, and links to everything that is public. Deeper access (code walkthrough, live demo) is available on request.
+At a glance:
+- **A Multi-Repo System:** This repo documents the architecture and engineering practices, while the actual execution nodes (like Aetherix) live in separate repositories.
+- **Perception Nodes:** Specialized agents that own strict bounded contexts. They expose their capabilities as [MCP](https://modelcontextprotocol.io) tools and focus purely on *understanding* data, never deciding.
+- **Bespoke Orchestrator:** A central decision engine built entirely from scratch. It holds 100% of the reasoning loop to separate perception from action, ensuring a human manager is always the final authority.
 
-## The Mesh
+## The Mesh Architecture
 
 ```mermaid
 graph LR
-    subgraph Nodes["Execution nodes (bounded contexts)"]
-        A["Aetherix<br/>F&B: covers forecast,<br/>staffing, daily receipts"]
-        T["Tacet<br/>Environment: noise, events,<br/>construction risk"]
-        AN["Anima<br/>Guest cognition<br/>(design stage)"]
+    subgraph Nodes["Perception Nodes (Bounded Contexts)"]
+        AN["Anima<br/>Guest Context & Cognition<br/>(4-layer temporal memory)"]
+        A["Aetherix<br/>F&B Operations<br/>(Forecast, staffing, waste)"]
+        T["Tacet<br/>Environmental Risk<br/>(Noise, events, transit)"]
     end
-    O["Orchestrator<br/>(the only node<br/>with decision logic)"]
+    O["Bespoke Orchestrator<br/>(Event-driven, the only<br/>decision maker)"]
     PMS["PMS / POS<br/>(Apaleo, Mews)"]
-    M["Hotel manager<br/>(WhatsApp, validates everything)"]
+    M["Hotel Manager<br/>(WhatsApp, 1-tap validation)"]
+    ML["Meta-Learner<br/>(Continuous improvement)"]
 
     O <-->|MCP tools| A
     O <-->|MCP tools| T
-    O -.->|planned| AN
-    PMS --> A
-    A -->|recommendations| M
-    M -->|feedback| A
+    O <-->|MCP tools| AN
+    PMS --> O
+    O -->|curated recommendations| M
+    M -->|human feedback| ML
+    PMS -->|autonomous ground-truth| ML
+    ML -.->|recalibrates thresholds| O
 ```
 
-Design principles, the parts I'd defend in any architecture review:
+### Core Design Principles
 
-- **Execution nodes never orchestrate.** Aetherix doesn't know when to run; an orchestrator decides. Perception signals and decision logic are separated by contract.
-- **Push-first, UI-less.** The manager gets a daily WhatsApp "receipt" with the forecast, the staffing recommendation and the reasoning. One tap to accept or reject, and that reply becomes training signal.
-- **Human-in-the-loop is structural, not a toggle.** No auto-actions. Every guardrail trip is logged with a typed reason.
-- **Glue, not replacement.** A PMS-agnostic canonical schema behind adapters; intelligence delivered inside the tools hotels already use.
+1. **Execution nodes never orchestrate.** The perception nodes (Anima, Aetherix, Tacet) strictly *interpret* signals within their domain. They never decide when to run or what action to take. The bespoke Orchestrator holds 100% of the decision logic.
+2. **Glue, not replacement Delivery.** The Mesh operates via a PMS-agnostic canonical schema behind adapters. Intelligence is delivered directly inside the tools managers already use (e.g., 1-tap WhatsApp "receipts" summarizing the reasoning), requiring zero new dashboards to monitor.
+3. **Preventing HITL (Human-in-the-Loop) Fatigue.** Human-in-the-loop is structural, but a manager bombarded with alerts will ignore them. The Orchestrator uses calibrated thresholds to filter out the noise, sending only high-significance, composite recommendations.
+4. **Continuous Improvement (The Meta-Learner).** The system employs a dual learning strategy to continually optimize the Orchestrator's decision thresholds:
+    - *Human Feedback Loop:* Every manager's 1-tap response (accept/reject) trains the system.
+    - *Autonomous Loop:* The system automatically compares its past predictions against the actual ground-truth data flowing from the PMS/POS, self-correcting without human intervention.
+5. **Hive Memory (Federated Priors).** To solve the cold-start problem for new hotels, a federated "Hive" layer shares anonymized, learned priors across properties, ensuring day-1 effectiveness without leaking tenant data.
+
+## The Nodes
+
+### 🧠 Anima: The Relational Core (Guest Context)
+Hospitality is fundamentally about the guest. Anima is the intelligence engine that allows the hotel to anticipate and personalize the experience as if every guest were a regular. It utilizes a **4-layer temporal memory** (Working, Episodic, Semantic, Segment) to prevent "over-fetching" context, ensuring the Orchestrator makes the *right gesture* for the *right guest* at the *right time*.
+
+### 🍽️ Aetherix: F&B Execution
+Aetherix anticipates staffing and F&B needs to cut food waste and control costs. It ingests historical data, weather, and local events to forecast operational pressure, issuing daily recommendations for kitchen prep and front-of-house staffing.
+
+### 🏙️ Tacet: Environmental Awareness
+Tacet listens to the city. It monitors external risks—construction noise, transit strikes, and local events—translating chaotic real-world data into structured risk scores so the hotel can proactively manage guest expectations.
 
 ## What's built vs. what's vision
 
-This is a solo project. The mesh narrative is a north star, not a shipped platform, and this table keeps the two apart.
+This is a solo project. The mesh narrative is a north star, but tangible PoCs and production-ready nodes are already built to de-risk the architecture.
 
 | Component | Status | Evidence |
 |---|---|---|
-| **Aetherix**, F&B execution node | **Built** (private): ~16.5k LOC app / ~18.6k LOC tests, staging live on Fly.io, 11 ADRs | Case study; walkthrough on request |
-| Forecast pipeline (Prophet + weather/events/occupancy regressors) | Built. Real-data benchmark **published**: beats naive baseline by 6 MAPE pts overall, ties it on the median day (documented honestly) | [benchmark/](benchmark/) |
-| Closed learning loop: outcome capture, G-3 data guarding, drift self-detection, weekly recalibration | Built. 30-day demo: +25% regime shift absorbed, error 15.9% → 12.3% (sandbox data, real mechanics, deterministic) | [demo/closed-loop/](demo/closed-loop/) |
-| Daily Receipts over WhatsApp (Twilio) + inbound feedback parsing | Built, on staging | Demo video planned |
-| MCP server (atomic tools) | Built (v0) | |
-| Eval-by-design: **blocking CI gate** on forecast eval, deterministic Prophet-in-CI | Built. 3 identical CI runs, 0.00pp variance, before flipping the gate to blocking | Write-up planned |
-| Runtime guardrails: dead-man's switch, error-rate alerting, feedback-to-training bounds, tiered-confidence circuit breaker, output sanity | Built | |
-| **Tacet**, environmental risk node | **Prototype** (~1.4k LOC, public): polar acoustic heatmap, shielding from building footprints | [tacet-app](https://github.com/IvandeMurard/tacet-app) |
-| **Orchestrator** | Proto-stub only | |
-| **Anima**, guest cognition node | Design thesis only, published | [COGNITION.md](COGNITION.md) |
-| Federated multi-property memory ("Hive") | Designed, not shipped | |
+| **Aetherix** (F&B Node) | **Built** (private): ~16.5k LOC, staging live on Fly.io, 11 ADRs | Case study; walkthrough on request |
+| **Anima** (Guest Node) | **Built (PoC)**: 4-layer temporal memory, synthetic cohort eval, working MCP server | Local evals & synthetic data |
+| **Tacet** (Environment Node) | **Built** (public): Live data ingestion pipeline | [Public Repo](https://github.com/IvandeMurard/tacet-app) |
+| **Bespoke Orchestrator** | **In Progress**: Building the event-driven decision engine from scratch | Architectural ADRs |
+| **Meta-Learner & Feedback Loop** | **In Progress**: Outcome capture and threshold calibration | Proof of concept in F&B |
 
 ## Engineering practices I'd bring to a team
 
+I am building this Mesh solo from zero-to-one to master the full lifecycle of agentic AI systems. Beyond just stringing API calls together, this project demonstrates the structured engineering practices I'd bring to any full-time engineering role:
+
+- **Full Ownership & Bespoke Control:** I build the critical path (like the Orchestrator) from scratch. When off-the-shelf frameworks obscure reasoning or limit control, I engineer bespoke solutions that keep the logic 100% transparent and deterministic.
 - **Evals as merge gates, not dashboards.** Golden dataset plus an offline gate in CI (exit codes block the merge), separated by contract from runtime guardrails.
 - **Typed failure reasons.** Every guardrail trip carries a machine-readable reason; "it degraded gracefully" is verifiable, not folklore.
 - **ADR discipline.** 31 indexed architectural decisions over 8 months, each with context and rollback notes.
-- **Continuous discovery as a routine, not an event.** Every Monday morning: an automated scan (cron) of the market, the competitive watchlist (PMS vendors, agentic hospitality startups, MCP ecosystem moves) and new techniques that could speed up production, followed by a proactive PM review session run with agent workflows (Claude Code + Cowork). Findings feed a watchlist that is re-evaluated at each phase gate.
-- **Adversarial reviews with multiple frontier models.** Architecture and roadmap get periodically stress-tested by different models playing critic; the July 2026 audit that produced the current 90-day plan came out of one of these sessions.
-- **Incident response, practiced.** A real leaked-secrets incident (production `.env` committed) handled end to end: history rewrite, 11/11 credential rotation, GitHub Support purge, post-mortem.
+- **Incident response, practiced.** Handled a real leaked-secrets incident end-to-end: history rewrite, 11/11 credential rotation, GitHub Support purge, and post-mortem.
 - **Tests outweigh code.** 1.13:1 test-to-app LOC ratio on the main node.
 
 ## Current focus (90-day plan, started July 2026)
 
-1. **Proof:** real-data forecast benchmark · closed-loop demo on the Apaleo sandbox (forecast, recommendation, feedback, recalibration) · observability (Logfire traces, LLM cost per recommendation) · F&B manager interviews.
-2. **Visibility:** this repo · a technical write-up on the blocking eval gate · a demo video.
+1. **Proof:** real-data forecast benchmark • closed-loop demo on the Apaleo sandbox (forecast, recommendation, feedback, recalibration) • observability (Logfire traces, LLM cost per recommendation) • F&B manager interviews.
+2. **Visibility:** this repo • a technical write-up on the blocking eval gate • a demo video.
 
 ## Stack
 
-FastAPI · Python (async, Pydantic v2) · Supabase Postgres + pgvector (HNSW) · Prophet · Claude (multi-LLM provider abstraction) · Mistral embeddings · Redis (Upstash) · Twilio WhatsApp · Apaleo PMS (OAuth2) · Fly.io · GitHub Actions (CI + eval gate + schema-drift gate)
+FastAPI • Python (async, Pydantic v2) • Supabase Postgres + pgvector (HNSW) • Prophet • Claude (multi-LLM provider abstraction) • Mistral embeddings • Redis (Upstash) • Twilio WhatsApp • Apaleo PMS (OAuth2) • Fly.io • GitHub Actions (CI + eval gate + schema-drift gate)
 
 ## License
 
