@@ -22,10 +22,10 @@ The individual forecasts and risk scores are just sensory organs. The true produ
 
 ## What this is
 
-This is the public meta-repo of a multi-repo system I've been building solo since late 2025. It serves as the architectural blueprint for an event-driven network of AI agents designed for hotel operations.
+This is the public meta-repo of an multi-agent system I've been building solo since late 2025. It serves as the architectural blueprint for an event-driven network of AI agents designed for hotel operations.
 
 At a glance:
-- **A Multi-Repo System:** This repo documents the architecture and engineering practices, while the actual execution nodes (like Aetherix) live in separate repositories.
+- **A Multi-Agent System:** This repo documents the architecture and engineering practices, while the actual execution nodes (like Aetherix) live in separate repositories.
 - **Perception Nodes:** Specialized agents that own strict bounded contexts. They expose their capabilities as [MCP](https://modelcontextprotocol.io) tools and focus purely on *understanding* data, never deciding.
 - **Bespoke Orchestrator:** A central decision engine built entirely from scratch. It holds 100% of the reasoning loop to separate perception from action, ensuring a human manager is always the final authority.
 
@@ -71,8 +71,8 @@ Hospitality is fundamentally about the guest. Anima is the intelligence engine t
 ### 🍽️ Aetherix: F&B Execution
 Aetherix anticipates staffing and F&B needs to cut food waste and control costs. It ingests historical data, weather, and local events to forecast operational pressure, issuing daily recommendations for kitchen prep and front-of-house staffing.
 
-### 🏙️ Tacet: Environmental Awareness
-Tacet listens to the city. It monitors external risks—construction noise, transit strikes, and local events—translating chaotic real-world data into structured risk scores so the hotel can proactively manage guest expectations.
+### 🌍 Tacet: Environmental Awareness
+Tacet listens to the city. It monitors external risks—construction noise, transit strikes, and local events—translating chaotic real-world data into structured risk scores so the hotel can act proactively.
 
 ## What's built vs. what's vision
 
