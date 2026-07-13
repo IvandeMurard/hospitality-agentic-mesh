@@ -13,7 +13,7 @@
 
 ## The thesis
 
-The prediction layer of vertical AI is commoditizing: our own [real-data benchmark](benchmark/) shows the forecasting engine tying a naive same-weekday baseline on the median day. What compounds instead is **memory**: capturing outcomes next to the forecasts that preceded them, self-reporting the miss to the manager, guarding the training data, recalibrating weekly. The forecast is an organ; the closed loop and the per-property memory it builds are the product. Full argument: [COGNITION.md](COGNITION.md) · working proof: [demo/closed-loop/](demo/closed-loop/).
+**Memory**: capturing outcomes next to the forecasts that preceded them, self-reporting the miss to the manager, guarding the training data, recalibrating weekly. The forecast is an organ; the closed loop and the per-property memory it builds are the product. Full argument: [COGNITION.md](COGNITION.md) · working proof: [demo/closed-loop/](demo/closed-loop/).
 
 ## What this is
 
